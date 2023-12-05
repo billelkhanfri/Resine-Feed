@@ -1,40 +1,23 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
-import logo from "./images/9722fa15-591e-4aaf-9660-f2bf75bcecdc.png";
+import { Container, Grid, AppBar, Typography } from "@mui/material";
 import Form from "./components/Form/Form";
-import Posts from "./components/Posts/Posts";
+import PostList from "./components/Posts/PostListe";
 
-import "./App.css";
-
-function App() {
+const App = () => {
   return (
-    <Container maxidth="lg">
-      <AppBar position="static" color="inherit">
-        <Typography variant="h2" align="center">
-          Resine Feeds
-        </Typography>
-        <img src={logo} alt="logo e resine media" height="60" />
+    <Container>
+      <AppBar position="static" style={{ marginBottom: "20px" }}>
+        <Typography variant="h6">My Social Media App</Typography>
       </AppBar>
-      <Grow in>
-        <Container>
-          <Grid
-            container
-            justify="space-between"
-            alignItems=" stretch"
-            spacing={3}
-          >
-            <Grid item xs={12} sm={7}>
-              <Posts></Posts>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Form></Form>
-            </Grid>
-          </Grid>
-        </Container>
-      </Grow>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Form />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <PostList />
+        </Grid>
+      </Grid>
     </Container>
   );
-}
+};
 
 export default App;
