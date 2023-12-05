@@ -24,27 +24,27 @@ const getPosts = async (req, res) => {
  */
 const createPost = async (req, res) => {
   const { title, message } = req.body;
-  const selectedFile = req.file;
+  const image = req.file;
 
   // Ensure the file is present
-  if (!selectedFile) {
+  if (!image) {
     return res.status(400).json({ message: "No file uploaded." });
   }
 
   // Save the file to your desired storage location (e.g., disk storage)
   // Adjust the storage destination and filename as needed
   const fileDestination = "uploads/"; // Replace with your desired storage location
-  const fileName = `${Date.now()}-${selectedFile.originalname}`;
+  const fileName = `${Date.now()}-${image.originalname}`;
   const filePath = `${fileDestination}${fileName}`;
 
   // Save the file to the destination
-  require("fs").writeFileSync(filePath, selectedFile.buffer);
+  require("fs").writeFileSync(filePath, image.buffer);
 
   // Now, you can use filePath as the URL or path to the file in your database
   const newPost = new PostMessage({
     title,
     message,
-    selectedFile: filePath, // Use the file path or URL in your database
+    image: filePath, // Use the file path or URL in your database
   });
 
   try {

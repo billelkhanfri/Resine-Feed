@@ -15,7 +15,7 @@ const postSchema = new mongoose.Schema(
       maxLength: 500,
     },
 
-    selectedFile: {
+    image: {
       type: String,
       required: true,
     },
@@ -35,7 +35,7 @@ function validateCreatePost(obj) {
   const schema = Joi.object({
     title: Joi.string().trim().min(1).max(200),
     message: Joi.string().trim().min(1).max(500),
-    selectedFile: Joi.string(),
+    image: Joi.string(),
   });
   return schema.validate(obj);
 }

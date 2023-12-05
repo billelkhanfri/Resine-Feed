@@ -3,6 +3,8 @@ import Form from "./components/Form/Form";
 import PostList from "./components/Posts/PostListe";
 
 const App = () => {
+ 
+
   return (
     <Container>
       <AppBar position="static" style={{ marginBottom: "20px" }}>
@@ -10,10 +12,10 @@ const App = () => {
       </AppBar>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Form />
+          <Form  />
         </Grid>
         <Grid item xs={12} md={6}>
-          <PostList />
+          <PostList  />
         </Grid>
       </Grid>
     </Container>

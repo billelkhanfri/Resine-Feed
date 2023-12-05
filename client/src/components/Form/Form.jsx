@@ -1,73 +1,73 @@
-// Form.jsx
-
 import { useState } from "react";
-import { TextField, Button, Typography, Paper, Input } from "@mui/material";
 
-const Form = ({ onSubmit }) => {
-  const [postData, setPostData] = useState({
-    title: "",
-    message: "",
-    selectedFile: null, // Updated to store the file object
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("title", postData.title);
-    formData.append("message", postData.message);
-    formData.append("selectedFile", postData.selectedFile);
-
-    onSubmit(formData);
-    // Clear the form fields
-    setPostData({ title: "", message: "", selectedFile: null });
-  };
+const Form = () => {
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [image, setImage] = useState(null); // Utilisez null comme valeur initiale pour le fichier
 
   const handleFileChange = (e) => {
-    // Update the selectedFile in the state when a file is chosen
-    setPostData({ ...postData, selectedFile: e.target.files[0] });
+    // Mettez à jour l'état avec le fichier sélectionné
+    setImage(e.target.files[0]);
+  };
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("message", message);
+    formData.append("image", image);
+
+    fetch("http://localhost:8000/posts", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
-    <Paper elevation={3} style={{ padding: "20px", marginBottom: "20px" }}>
-      <form onSubmit={handleSubmit} autoComplete="off">
-        <Typography variant="h6">Create a Post</Typography>
-        <TextField
+    <div>
+      <form>
+        <label htmlFor="title">Titre :</label>
+        <input
+          type="text"
+          id="title"
           name="title"
-          label="Title"
-          fullWidth
-          value={postData.title}
-          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
         />
-        <TextField
+        <br />
+
+        <label htmlFor="message">Message :</label>
+        <textarea
+          id="message"
           name="message"
-          label="Message"
-          fullWidth
-          multiline
-          rows={4}
-          value={postData.message}
-          onChange={(e) =>
-            setPostData({ ...postData, message: e.target.value })
-          }
-        />
-        <Input
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+        ></textarea>
+        <br />
+
+        <label htmlFor="image">Sélectionner une image :</label>
+        <input
           type="file"
-          name="selectedFile"
-          accept="image/*"
+          id="image"
+          name="image"
           onChange={handleFileChange}
-          style={{ marginTop: "10px" }}
+          required
         />
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          type="submit"
-          fullWidth
-        >
-          Submit
-        </Button>
+        <br />
+
+        <button type="button" onClick={handleSubmit}>
+          Soumettre
+        </button>
       </form>
-    </Paper>
+    </div>
   );
 };
 

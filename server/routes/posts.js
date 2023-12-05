@@ -11,6 +11,6 @@ const router = express.Router();
 
 // Routes for posts
 router.get("/", getPosts);
-router.post("/", upload.single("selectedFile"), createPost);
+router.post("/", upload.single("image"), createPost);
 
 module.exports = router;
