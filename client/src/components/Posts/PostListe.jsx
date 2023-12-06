@@ -1,34 +1,14 @@
-import { useState, useEffect } from "react";
-
-function PostList() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/posts");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setPosts(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching posts:", error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
+/* eslint-disable react/prop-types */
+// eslint-disable-next-line react/prop-types
+function PostList({ posts, loading }) {
   return (
     <div>
       <h2>All Posts</h2>
       {loading ? (
         <p>Loading posts...</p>
+      // eslint-disable-next-line react/prop-types
+      ) : posts.length === 0 ? (
+        <p>No posts available.</p>
       ) : (
         <ul>
           {posts.map((post) => (
